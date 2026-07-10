@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Dzialka",
+    "slug": "dzialka",
+    "cover": null,
+    "photos": [],
+    "photo_count": 0
+  },
+  {
+    "name": "Pets",
+    "slug": "pets",
+    "cover": null,
+    "photos": [],
+    "photo_count": 0
+  },
+  {
+    "name": "Projects",
+    "slug": "projects",
+    "cover": null,
+    "photos": [],
+    "photo_count": 0
+  }
+]

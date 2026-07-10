@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vonesse Photos</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Vonesse Photos</h1>
+        <p>A collection of family memories</p>
+    </header>
+    <main>
+        <div class="gallery-grid" id="gallery">
+            {% for album in albums %}
+            <a href="/album/{{ album.slug }}" class="album-card">
+                {% if album.cover %}
+                <img src="/{{ album.cover }}" alt="{{ album.name }}" class="album-cover">
+                {% else %}
+                <div class="album-cover" style="background: linear-gradient(135deg, #374151, #1f2937); height: 250px; display: flex; align-items: center; justify-content: center;">
+                    <span style="font-size: 3rem;">📸</span>
+                </div>
+                {% endif %}
+                <div class="album-info">
+                    <h3 class="album-title">{{ album.name }}</h3>
+                    <p class="album-count">{{ album.photo_count }} photos</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Vonesse Family</p>
+    </footer>
+</body>
+</html>

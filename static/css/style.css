@@ -19,6 +19,18 @@ header {
     border-bottom: 1px solid #334155;
 }
 
+.back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: #60a5fa;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.back-link:hover {
+    color: #93c5fd;
+}
+
 header h1 {
     font-size: 3rem;
     font-weight: 300;
@@ -84,6 +96,31 @@ main {
 .album-count {
     color: #64748b;
     font-size: 0.9rem;
+}
+
+/* Photo Grid */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.photo-item {
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.photo-item:hover {
+    transform: scale(1.02);
+}
+
+.photo-item img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
 }
 
 /* Lightbox */
@@ -171,6 +208,10 @@ footer {
     .gallery-grid {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 1rem;
+    }
+    
+    .photo-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
     
     main {

@@ -3,16 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vonesse Photos</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>{{ album.name }} - Vonesse Photos</title>
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <header>
-        <h1>Vonesse Photos</h1>
-        <p>A collection of family memories</p>
+        <a href="/" class="back-link">← Back to Gallery</a>
+        <h1>{{ album.name }}</h1>
+        <p>{{ album.photo_count }} photos</p>
     </header>
     <main>
-        <div class="gallery-grid" id="gallery"></div>
+        <div class="photo-grid" id="photo-grid">
+            {% for photo in album.photos %}
+            <div class="photo-item" onclick="openLightbox('{{ photo.original }}', {{ loop.index0 }})">
+                <img src="{{ photo.thumbnail }}" alt="{{ photo.original }}" loading="lazy">
+            </div>
+            {% endfor %}
+        </div>
     </main>
     <div class="lightbox" id="lightbox">
         <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
@@ -24,6 +31,6 @@
     <footer>
         <p>&copy; 2025 Vonesse Family</p>
     </footer>
-    <script src="js/gallery.js"></script>
+    <script src="/static/js/gallery.js"></script>
 </body>
 </html>

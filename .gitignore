@@ -1,0 +1,16 @@
+# Photos and thumbnails - these are large and local-only
+photos/
+thumbnails/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
