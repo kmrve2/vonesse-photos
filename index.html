@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vonesse Photos</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Vonesse Photos</h1>
+        <p>A collection of family memories</p>
+    </header>
+    <main>
+        <div class="gallery-grid" id="gallery"></div>
+    </main>
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <button class="lightbox-prev" onclick="prevImage()">&#8249;</button>
+        <button class="lightbox-next" onclick="nextImage()">&#8250;</button>
+        <img src="" alt="" id="lightbox-img">
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+    <footer>
+        <p>&copy; 2025 Vonesse Family</p>
+    </footer>
+    <script src="js/gallery.js"></script>
+</body>
+</html>
