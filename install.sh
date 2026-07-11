@@ -18,7 +18,13 @@ echo -e "${BLUE}Starting Photo Gallery Installation...${NC}"
 # 1. Update and Install Dependencies
 echo -e "${GREEN}[1/7] Updating system and installing dependencies...${NC}"
 apt update && apt upgrade -y
-apt install -y git nginx samba python3 python3-pip python3-venv curl
+apt install -y git nginx samba python3 python3-pip python3-venv curl ufw
+
+# Configure Firewall
+echo "Configuring firewall..."
+ufw allow 'Nginx Full'
+ufw allow samba
+ufw --force enable
 
 # 2. Create Directories
 echo -e "${GREEN}[2/7] Creating directories...${NC}"
@@ -104,7 +110,7 @@ User=www-data
 Group=www-data
 WorkingDirectory=$APP_DIR
 Environment="PATH=$APP_DIR/.venv/bin"
-ExecStart=$APP_DIR/.venv/bin/gunicorn -c gunicorn.conf.py app:app
+ExecStart=$APP_DIR/scripts/start.sh
 Restart=always
 
 [Install]
@@ -113,14 +119,12 @@ EOF
 
 systemctl daemon-reload
 systemctl enable photo-gallery
-systemctl start photo-gallery
 
-# Generate Initial Gallery
-python3 generate-gallery.py
-
-# Set permissions
+# Set permissions BEFORE starting the service
 chown -R www-data:www-data "$APP_DIR"
 chown -R www-data:www-data "$PHOTOS_DIR"
+
+systemctl start photo-gallery
 
 echo -e "${BLUE}Installation Complete!${NC}"
 echo ""
@@ -136,8 +140,18 @@ echo "     URL:   smb://<YOUR_SERVER_IP>/photo-gallery"
 echo "     User:  $SMB_USER"
 echo "     Pass:  (the one you just set)"
 echo ""
-echo "  3. After adding photos, regenerate the gallery:"
-echo "     cd /var/www/photo-gallery && python3 generate-gallery.py"
+echo "  3. Add photos via SMB share:"
+echo "     URL:   smb://<YOUR_SERVER_IP>/photo-gallery"
+echo "     User:  $SMB_USER"
+echo "     Pass:  (the one you just set)"
+echo ""
+echo "  4. The gallery updates automatically when the service restarts."
+echo "     To force an update now:"
+echo "     systemctl restart photo-gallery"
+echo ""
+echo "  5. To test with a sample photo:"
+echo "     cp -r /var/www/photo-gallery/sample-photos/* /var/www/photos/"
+echo "     systemctl restart photo-gallery"
 echo ""
 echo "  4. To change the SMB password later:"
 echo "     smbpasswd $SMB_USER"
