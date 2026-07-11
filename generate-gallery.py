@@ -10,9 +10,9 @@ import json
 from pathlib import Path
 from PIL import Image
 
-PHOTOS_DIR = Path(os.environ.get('PHOTOS_DIR', '/opt/data/vonesse-photos/photos'))
-THUMBNAILS_DIR = Path('/opt/data/vonesse-photos/thumbnails')
-OUTPUT_FILE = Path('/opt/data/vonesse-photos/templates/albums.json')
+PHOTOS_DIR = Path(os.environ.get('PHOTOS_DIR', '/var/www/photos'))
+THUMBNAILS_DIR = Path(os.environ.get('THUMBNAILS_DIR', '/var/www/photo-gallery/thumbnails'))
+OUTPUT_FILE = Path(os.environ.get('OUTPUT_FILE', '/var/www/photo-gallery/templates/albums.json'))
 
 def generate_thumbnail(photo_path, album_slug):
     """Generate a thumbnail for a photo."""

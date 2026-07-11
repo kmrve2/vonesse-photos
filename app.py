@@ -6,9 +6,9 @@ from pathlib import Path
 app = Flask(__name__)
 
 # Configure paths
-PHOTOS_DIR = os.environ.get('PHOTOS_DIR', '/opt/data/vonesse-photos/photos')
-THUMBNAILS_DIR = os.environ.get('THUMBNAILS_DIR', '/opt/data/vonesse-photos/thumbnails')
-ALBUMS_FILE = Path('/opt/data/vonesse-photos/templates/albums.json')
+PHOTOS_DIR = os.environ.get('PHOTOS_DIR', '/var/www/photos')
+THUMBNAILS_DIR = os.environ.get('THUMBNAILS_DIR', '/var/www/photo-gallery/thumbnails')
+ALBUMS_FILE = Path('/var/www/photo-gallery/templates/albums.json')
 
 def load_albums():
     """Load albums data from JSON."""

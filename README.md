@@ -1,19 +1,21 @@
-# Vonesse Photos
+# Photo Gallery
 
-A family photo gallery website showcasing memories from the Vonesse family.
+A self-hosted photo gallery application for organizing and sharing family memories.
 
-## Albums
+## Features
 
-- **Działka** - Family cottage and garden photos
-- **Pets** - Doodle, Beans, Figaro, and Macchiato  
-- **Projects** - Builds and creations
+- **Albums**: Organize photos by category.
+- **Lightbox**: Click to view full-size with navigation.
+- **Responsive**: Looks great on phone, tablet, desktop.
+- **Lazy Loading**: Pages load fast even with lots of photos.
+- **Easy Updates**: Drop photos in a folder, and the gallery updates automatically.
 
 ## Installation
 
 ### One-Command Install (Ubuntu/Debian)
 Run this single command on your server:
 ```bash
-sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/kmrve2/vonesse-photos/main/install.sh)"
+sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/USER/REPO/main/install.sh)"
 ```
 
 ### Manual Install
@@ -25,21 +27,37 @@ sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/kmrve2/vonesse-phot
 2. **Clone the repository**:
    ```bash
    mkdir -p /var/www && cd /var/www
-   git clone https://github.com/kmrve2/vonesse-photos.git
-   cd vonesse-photos
+   git clone https://github.com/USER/REPO.git photo-gallery
+   cd photo-gallery
    ```
 3. **Run the installer**:
    ```bash
    sudo bash install.sh
    ```
 
+## Adding Photos
+
+Drop photos into the `/var/www/photos` folder organized by album:
+```
+/var/www/photos/
+├── album-one/
+│   ├── photo1.jpg
+│   └── cover.jpg
+├── album-two/
+│   ├── photo1.jpg
+│   └── cover.jpg
+```
+
+Then run `python3 generate-gallery.py` to update the gallery.
+
 ## Tech
 
 - Static HTML/CSS/JS
-- GitHub Pages hosting
-- Lazy loading for performance
-- Responsive design
-- Lightbox viewer
+- Flask backend
+- Gunicorn WSGI server
+- Nginx reverse proxy
+- Samba for network file sharing
+- Pillow for image optimization
 
 ## License
 

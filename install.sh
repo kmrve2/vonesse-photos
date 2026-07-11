@@ -1,5 +1,5 @@
 #!/bin/bash
-# Vonesse Photos - One-Command Installer
+# Photo Gallery - One-Command Installer
 # Usage: sudo bash install.sh
 
 set -e
@@ -9,11 +9,11 @@ GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-APP_DIR="/var/www/vonesse-photos"
+APP_DIR="/var/www/photo-gallery"
 PHOTOS_DIR="/var/www/photos"
-SMB_USER="frank"
+SMB_USER="uploader"
 
-echo -e "${BLUE}Starting Vonesse Photos Installation...${NC}"
+echo -e "${BLUE}Starting Photo Gallery Installation...${NC}"
 
 # 1. Update and Install Dependencies
 echo -e "${GREEN}[1/7] Updating system and installing dependencies...${NC}"
@@ -28,7 +28,7 @@ mkdir -p "$PHOTOS_DIR"
 # 3. Clone Repository (if not already there)
 if [ ! -f "$APP_DIR/app.py" ]; then
     echo -e "${GREEN}[3/7] Cloning repository...${NC}"
-    git clone https://github.com/kmrve2/vonesse-photos.git "$APP_DIR"
+    git clone https://github.com/USER/REPO.git "$APP_DIR"
 else
     echo -e "${GREEN}[3/7] Repository already exists, skipping clone...${NC}"
     cd "$APP_DIR"
@@ -47,14 +47,14 @@ pip install -r requirements.txt
 
 # 5. Configure Nginx
 echo -e "${GREEN}[5/7] Configuring Nginx...${NC}"
-cp nginx/vonesse-photos.conf /etc/nginx/sites-available/vonesse-photos
-ln -sf /etc/nginx/sites-available/vonesse-photos /etc/nginx/sites-enabled/
+cp nginx/photo-gallery.conf /etc/nginx/sites-available/photo-gallery
+ln -sf /etc/nginx/sites-available/photo-gallery /etc/nginx/sites-enabled/
 rm -f /etc/nginx/sites-enabled/default
 nginx -t && systemctl restart nginx
 
 # 6. Configure Samba
 echo -e "${GREEN}[6/7] Configuring Samba...${NC}"
-cp samba/vonesse-photos.conf /etc/samba/smbconf.d/vonesse-photos.conf
+cp samba/photo-gallery.conf /etc/samba/smbconf.d/photo-gallery.conf
 
 # Add user if not exists
 if ! id "$SMB_USER" &>/dev/null; then
@@ -69,9 +69,9 @@ systemctl restart smbd nmbd
 
 # 7. Set Up Systemd Service
 echo -e "${GREEN}[7/7] Setting up Systemd service...${NC}"
-cat > /etc/systemd/system/vonesse-photos.service << EOF
+cat > /etc/systemd/system/photo-gallery.service << EOF
 [Unit]
-Description=Vonesse Photos Gallery
+Description=Photo Gallery
 After=network.target nginx.service smbd.service
 
 [Service]
@@ -88,8 +88,8 @@ WantedBy=multi-user.target
 EOF
 
 systemctl daemon-reload
-systemctl enable vonesse-photos
-systemctl start vonesse-photos
+systemctl enable photo-gallery
+systemctl start photo-gallery
 
 # Generate Initial Gallery
 python3 generate-gallery.py
@@ -100,5 +100,5 @@ chown -R www-data:www-data "$PHOTOS_DIR"
 
 echo -e "${BLUE}Installation Complete!${NC}"
 echo "Gallery URL: http://<YOUR_SERVER_IP>"
-echo "SMB Share: smb://<YOUR_SERVER_IP>/vonesse-photos"
+echo "SMB Share: smb://<YOUR_SERVER_IP>/photo-gallery"
 echo "SMB User: $SMB_USER"
