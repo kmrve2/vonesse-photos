@@ -8,23 +8,30 @@ A family photo gallery website showcasing memories from the Vonesse family.
 - **Pets** - Doodle, Beans, Figaro, and Macchiato  
 - **Projects** - Builds and creations
 
-## Adding Photos
+## Installation
 
-Drop photos into the `photos/` folder organized by album:
-```
-photos/
-├── dzialka/
-│   ├── photo1.jpg
-│   └── cover.jpg
-├── pets/
-│   ├── photo1.jpg
-│   └── cover.jpg
-└── projects/
-    ├── photo1.jpg
-    └── cover.jpg
+### One-Command Install (Ubuntu/Debian)
+Run this single command on your server:
+```bash
+sudo bash -c "$(curl -fsSL https://raw.githubusercontent.com/kmrve2/vonesse-photos/main/install.sh)"
 ```
 
-Then run `python3 generate-gallery.py` to update the gallery.
+### Manual Install
+1. **Update and install dependencies**:
+   ```bash
+   apt update && apt upgrade -y
+   apt install -y git nginx samba python3 python3-pip python3-venv curl
+   ```
+2. **Clone the repository**:
+   ```bash
+   mkdir -p /var/www && cd /var/www
+   git clone https://github.com/kmrve2/vonesse-photos.git
+   cd vonesse-photos
+   ```
+3. **Run the installer**:
+   ```bash
+   sudo bash install.sh
+   ```
 
 ## Tech
 
