@@ -34,7 +34,7 @@ def generate_thumbnail(photo_path, album_slug):
         except Exception as e:
             print(f"Error generating thumbnail for {photo_path}: {e}")
     
-    return f"thumbnails/{album_slug}/{thumb_path.name}"
+    return f"/thumbnails/{album_slug}/{thumb_path.name}"
 
 def scan_photos():
     """Scan photos/ directory and return album structure."""
@@ -63,21 +63,21 @@ def scan_photos():
         for ext in ["cover.jpg", "cover.png", "cover.webp"]:
             cover_path = album_dir / ext
             if cover_path.exists():
-                cover = generate_thumbnail(cover_path, album_dir.name)
+                cover = f"/{generate_thumbnail(cover_path, album_dir.name)}"
                 break
         
         # If no cover, use first photo
         if not cover and photos:
-            cover = generate_thumbnail(photos[0], album_dir.name)
+            cover = f"/{generate_thumbnail(photos[0], album_dir.name)}"
         
         # Generate thumbnails for all photos
         photo_thumbnails = []
         for photo in photos:
             thumb = generate_thumbnail(photo, album_dir.name)
             photo_thumbnails.append({
-                "original": f"photos/{album_dir.name}/{photo.name}",
-                "thumbnail": thumb
-            })
+                        "original": f"/photos/{album_dir.name}/{photo.name}",
+                        "thumbnail": f"/{thumb}"
+                    })
         
         album_data = {
             "name": album_name,
