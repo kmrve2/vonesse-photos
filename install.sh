@@ -54,7 +54,17 @@ nginx -t && systemctl restart nginx
 
 # 6. Configure Samba
 echo -e "${GREEN}[6/7] Configuring Samba...${NC}"
+
+# Ensure Samba config directory exists
+mkdir -p /etc/samba/smbconf.d
+
+# Copy the config
 cp samba/photo-gallery.conf /etc/samba/smbconf.d/photo-gallery.conf
+
+# Ensure Samba includes this directory in the main config
+if ! grep -q "include = /etc/samba/smbconf.d/*.conf" /etc/samba/smb.conf; then
+    echo "include = /etc/samba/smbconf.d/*.conf" >> /etc/samba/smb.conf
+fi
 
 # Add user if not exists
 if ! id "$SMB_USER" &>/dev/null; then
