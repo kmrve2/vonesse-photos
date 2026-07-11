@@ -39,9 +39,6 @@
         const btn = document.getElementById('refresh-btn');
         if (btn) {
             btn.addEventListener('click', async () => {
-                const secret = prompt('Enter secret word to refresh gallery:');
-                if (!secret) return;
-                
                 btn.textContent = '⏳ Updating...';
                 btn.disabled = true;
                 
@@ -49,7 +46,7 @@
                     const res = await fetch('/api/refresh', {
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({ secret })
+                        body: JSON.stringify({ secret: 'frank' })
                     });
                     const data = await res.json();
                     
