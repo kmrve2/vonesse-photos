@@ -73,6 +73,7 @@ fi
 
 # Set Samba password
 echo "Setting Samba password for user '$SMB_USER'..."
+echo "Note: Password must be at least 8 characters long."
 echo "Press Enter to use a random password, or type a password below:"
 read -s -p "SMB Password: " SMB_PASS
 if [ -z "$SMB_PASS" ]; then
