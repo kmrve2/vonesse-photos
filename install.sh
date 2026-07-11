@@ -71,14 +71,22 @@ if ! id "$SMB_USER" &>/dev/null; then
     useradd -M -s /usr/sbin/nologin "$SMB_USER"
 fi
 
-# Set Samba password
-echo "Setting Samba password for user '$SMB_USER'..."
-smbpasswd -a "$SMB_USER"
+# Set Samba password (generate a random one)
+SMB_PASS=$(openssl rand -base64 12)
+echo -e "${SMB_PASS}\n${SMB_PASS}" | smbpasswd -a -s "$SMB_USER"
+echo "Samba password for '$SMB_USER': $SMB_PASS"
 
 systemctl restart smbd nmbd
 
 # 7. Set Up Systemd Service
 echo -e "${GREEN}[7/7] Setting up Systemd service...${NC}"
+
+# Check that required files exist
+if [ ! -f "gunicorn.conf.py" ]; then
+    echo "ERROR: gunicorn.conf.py not found. Aborting."
+    exit 1
+fi
+
 cat > /etc/systemd/system/photo-gallery.service << EOF
 [Unit]
 Description=Photo Gallery

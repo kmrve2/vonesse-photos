@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Vonesse Photos - Gallery Generator
+Photo Gallery - Gallery Generator
 
 Scans the photos/ directory and generates the gallery HTML.
 Usage: python3 generate-gallery.py
