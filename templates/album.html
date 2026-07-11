@@ -15,10 +15,15 @@
     <main>
         <div class="photo-grid" id="photo-grid">
             {% for photo in album.photos %}
-            <div class="photo-item" onclick="openLightbox('{{ photo.original }}', {{ loop.index0 }})">
+            <div class="photo-item" onclick="openLightbox({{ loop.index0 }})">
                 <img src="{{ photo.thumbnail }}" alt="{{ photo.original }}" loading="lazy">
             </div>
             {% endfor %}
+        </div>
+        <!-- Hidden list of full-size image URLs for the lightbox -->
+        <div id="full-images" style="display:none;">
+            {% for photo in album.photos %}
+            <span>{{ photo.original }}|{% endfor %}
         </div>
     </main>
     <div class="lightbox" id="lightbox">
@@ -28,9 +33,6 @@
         <img src="" alt="" id="lightbox-img">
         <div class="lightbox-caption" id="lightbox-caption"></div>
     </div>
-    <footer>
-        <p>&copy; 2025</p>
-    </footer>
     <script src="/static/js/gallery.js"></script>
 </body>
 </html>

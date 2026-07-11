@@ -1,15 +1,17 @@
-// Vonesse Photos - Lightbox JavaScript
+// Photo Gallery - Lightbox JavaScript
 let currentImages = [];
 let currentIndex = 0;
 
-function openLightbox(imageSrc, index) {
-    // Get all photos from the grid
-    currentImages = [];
-    const photoItems = document.querySelectorAll('.photo-item img');
-    photoItems.forEach(img => {
-        currentImages.push(img.src);
-    });
-    
+// Initialize full-size image list from hidden DOM element
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('full-images');
+    if (container) {
+        const raw = container.textContent.trim().slice(0, -1); // remove trailing |
+        currentImages = raw.split('|').filter(Boolean);
+    }
+});
+
+function openLightbox(index) {
     currentIndex = index;
     updateLightbox();
     document.getElementById('lightbox').classList.add('active');
