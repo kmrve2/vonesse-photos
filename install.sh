@@ -28,7 +28,7 @@ mkdir -p "$PHOTOS_DIR"
 # 3. Clone Repository (if not already there)
 if [ ! -f "$APP_DIR/app.py" ]; then
     echo -e "${GREEN}[3/7] Cloning repository...${NC}"
-    git clone https://github.com/USER/REPO.git "$APP_DIR"
+    git clone https://github.com/kmrve2/vonesse-photos.git "$APP_DIR"
 else
     echo -e "${GREEN}[3/7] Repository already exists, skipping clone...${NC}"
     cd "$APP_DIR"
