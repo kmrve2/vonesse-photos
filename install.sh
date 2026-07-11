@@ -71,10 +71,15 @@ if ! id "$SMB_USER" &>/dev/null; then
     useradd -M -s /usr/sbin/nologin "$SMB_USER"
 fi
 
-# Set Samba password (generate a random one)
-SMB_PASS=$(openssl rand -base64 12)
+# Set Samba password
+echo "Setting Samba password for user '$SMB_USER'..."
+echo "Press Enter to use a random password, or type a password below:"
+read -s -p "SMB Password: " SMB_PASS
+if [ -z "$SMB_PASS" ]; then
+    SMB_PASS=$(openssl rand -base64 12)
+    echo "(Generated random password: $SMB_PASS)"
+fi
 echo -e "${SMB_PASS}\n${SMB_PASS}" | smbpasswd -a -s "$SMB_USER"
-echo "Samba password for '$SMB_USER': $SMB_PASS"
 
 systemctl restart smbd nmbd
 
@@ -117,6 +122,23 @@ chown -R www-data:www-data "$APP_DIR"
 chown -R www-data:www-data "$PHOTOS_DIR"
 
 echo -e "${BLUE}Installation Complete!${NC}"
-echo "Gallery URL: http://<YOUR_SERVER_IP>"
-echo "SMB Share: smb://<YOUR_SERVER_IP>/photo-gallery"
-echo "SMB User: $SMB_USER"
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  📸  Next Steps"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo ""
+echo "  1. View the gallery:"
+echo "     http://<YOUR_SERVER_IP>"
+echo ""
+echo "  2. Add photos via SMB share:"
+echo "     URL:   smb://<YOUR_SERVER_IP>/photo-gallery"
+echo "     User:  $SMB_USER"
+echo "     Pass:  (the one you just set)"
+echo ""
+echo "  3. After adding photos, regenerate the gallery:"
+echo "     cd /var/www/photo-gallery && python3 generate-gallery.py"
+echo ""
+echo "  4. To change the SMB password later:"
+echo "     smbpasswd $SMB_USER"
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
