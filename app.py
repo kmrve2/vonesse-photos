@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_from_directory, jsonify
+from flask import Flask, render_template, send_from_directory, jsonify, request
 import os
 import json
 from pathlib import Path
@@ -38,6 +38,31 @@ def album_page(slug):
         if album['slug'] == slug:
             return render_template('album.html', album=album)
     return render_template('404.html'), 404
+
+@app.route('/api/refresh', methods=['POST'])
+def refresh_gallery():
+    """API endpoint to trigger gallery regeneration."""
+    import subprocess
+    import os
+    
+    # Simple auth check (you can change 'frank' to whatever you want)
+    data = request.get_json()
+    if not data or data.get('secret') != 'frank':
+        return jsonify({'error': 'Invalid secret'}), 401
+    
+    try:
+        # Run the generator script
+        result = subprocess.run(
+            ['python3', 'generate-gallery.py'],
+            cwd='/var/www/photo-gallery',
+            capture_output=True, text=True, timeout=60
+        )
+        if result.returncode == 0:
+            return jsonify({'status': 'success', 'message': 'Gallery updated!'})
+        else:
+            return jsonify({'error': result.stderr}), 500
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)

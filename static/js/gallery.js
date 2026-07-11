@@ -73,3 +73,38 @@ document.addEventListener('click', function(e) {
         closeLightbox();
     }
 });
+
+// Refresh Gallery Button
+document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('refresh-btn');
+    if (btn) {
+        btn.addEventListener('click', async () => {
+            const secret = prompt('Enter secret word to refresh gallery:');
+            if (!secret) return;
+            
+            btn.textContent = '⏳ Updating...';
+            btn.disabled = true;
+            
+            try {
+                const res = await fetch('/api/refresh', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ secret })
+                });
+                const data = await res.json();
+                
+                if (res.ok) {
+                    alert('Gallery updated successfully! Refreshing page...');
+                    location.reload();
+                } else {
+                    alert('Error: ' + (data.error || 'Failed to update'));
+                }
+            } catch (e) {
+                alert('Connection error: ' + e);
+            } finally {
+                btn.textContent = '🔄 Refresh Gallery';
+                btn.disabled = false;
+            }
+        });
+    }
+});
