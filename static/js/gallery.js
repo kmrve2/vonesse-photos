@@ -2,16 +2,20 @@
 let currentImages = [];
 let currentIndex = 0;
 
-// Initialize full-size image list from hidden DOM element
+// Initialize full-size image list from data attribute
 document.addEventListener('DOMContentLoaded', () => {
-    const container = document.getElementById('full-images');
-    if (container) {
-        const raw = container.textContent.trim().slice(0, -1); // remove trailing |
-        currentImages = raw.split('|').filter(Boolean);
+    const grid = document.getElementById('photo-grid');
+    if (grid) {
+        try {
+            currentImages = JSON.parse(grid.dataset.images || '[]');
+        } catch(e) {
+            console.error('Failed to parse image list:', e);
+        }
     }
 });
 
 function openLightbox(index) {
+    if (!currentImages.length) return;
     currentIndex = index;
     updateLightbox();
     document.getElementById('lightbox').classList.add('active');
