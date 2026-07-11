@@ -43,6 +43,9 @@ function updateLightbox() {
     
     img.src = currentImages[currentIndex];
     caption.textContent = `${currentIndex + 1} / ${currentImages.length}`;
+    
+    // Log for debugging
+    console.log('Loading image:', currentImages[currentIndex]);
 }
 
 // Keyboard navigation
