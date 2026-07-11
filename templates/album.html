@@ -14,7 +14,7 @@
     </header>
     <main>
         <div class="photo-grid" id="photo-grid"
-             data-images='{{ album.photos | map(attribute="original") | tojson }}'>
+             data-images='{{ album.photos | map(attribute="original") | list | tojson }}'>
             {% for photo in album.photos %}
             <div class="photo-item" onclick="openLightbox({{ loop.index0 }})">
                 <img src="{{ photo.thumbnail }}" alt="{{ photo.original }}" loading="lazy">
