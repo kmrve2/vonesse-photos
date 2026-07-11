@@ -43,6 +43,9 @@ fi
 
 cd "$APP_DIR"
 
+# Fix Git "dubious ownership" error (common when files are owned by www-data)
+git config --global --add safe.directory "$APP_DIR"
+
 # 4. Set Up Python
 echo -e "${GREEN}[4/7] Setting up Python environment...${NC}"
 if [ ! -d ".venv" ]; then
