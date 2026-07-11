@@ -120,6 +120,9 @@ EOF
 systemctl daemon-reload
 systemctl enable photo-gallery
 
+# Ensure start script is executable
+chmod +x "$APP_DIR/scripts/start.sh"
+
 # Set permissions BEFORE starting the service
 chown -R www-data:www-data "$APP_DIR"
 chown -R www-data:www-data "$PHOTOS_DIR"
